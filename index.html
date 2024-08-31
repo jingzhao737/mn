@@ -46,8 +46,11 @@
             background-position: center;
             background-size: cover;
             background-repeat: no-repeat; /* 确保在视频之上 */
+            z-index: 2;
         }
-
+        .video-container video {
+            z-index: 1; /* 确保视频在占位符之下 */
+        }
   .overlay-image {
     position: absolute;
     top: 0;
@@ -58,6 +61,7 @@
     background-position: center;
     background-size: cover;
     opacity: 0.8;
+    z-index: 3;
 
   }
 
@@ -71,7 +75,7 @@
     text-align: center;
     height: 50px; /* 初始高度 */
     transition: height 0.6s ease;
-    z-index: 3;
+    z-index: 99;
     overflow: hidden; /* 确保内容不会超出容器 */
     backdrop-filter: blur(8px); /* 磨砂效果 */
     display: flex;
@@ -140,6 +144,7 @@
   left: 50%;
   transform: translate(-50%, 135px);
   text-align: center;
+  z-index: 98;
 }
 
 .link-container a {
