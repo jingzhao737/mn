@@ -35,22 +35,20 @@
     min-height: 100%;
     transform: translate(-50%, -50%);
     object-fit: cover;
+    z-index: 1;
   }
   .image-placeholder {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('123123.jpg'); /* 占位符图片 */
-            background-position: center;
-            background-size: cover;
-            background-repeat: no-repeat; /* 确保在视频之上 */
-            z-index: 2;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: translate(-50%, -50%);
+    background: url('123123.jpg') no-repeat center center;
+    background-size: cover;
+    z-index: 2;
         }
-        .video-container video {
-            z-index: 1; /* 确保视频在占位符之下 */
-        }
+
   .overlay-image {
     position: absolute;
     top: 0;
@@ -392,7 +390,7 @@
 </div>
 
 <div class="video-container">
-  <video autoplay muted loop>
+  <video autoplay muted loop preload="auto">
     <source src="eardrop.mp4" type="video/mp4">
     Your browser does not support the video tag.
     <div class="image-placeholder"></div>
