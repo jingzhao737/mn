@@ -361,128 +361,157 @@
 </style>
 </head>
 <body>
+  <!-- 返回顶部按钮 -->
   <button id="scrollToTopBtn" class="scroll-to-top">
     <div class="arrow-up"></div>
     <div class="circle"></div> <!-- 新增的小圆 -->
   </button>
-<!-- 添加导航栏 -->
-<div class="navbar">
-  <a href="https://space.bilibili.com/29053979?spm_id_from=333.1007.0.0" target="_blank" class="left">CNJ</a>
-  <a href="https://chatgpt.com/c/cdd32418-65d1-4aef-abc7-dbb4f6987678" target="_blank" class="middle">Chatgpt</a>
-  <a href="https://chatgpt.com/c/cdd32418-65d1-4aef-abc7-dbb4f6987678" target="_blank" class="middle1 moonight">Moonight</a>
-  <a href="https://translate.google.com/?hl=zh-CN&sl=auto&tl=zh-CN&op=translate" target="_blank" class="middle2">Translate</a>
-  <a href="https://chatgpt.com/c/cdd32418-65d1-4aef-abc7-dbb4f6987678" target="_blank" class="right">Animation</a>
-</div>
 
-<div class="video-container">
-  <video autoplay muted loop>
-    <source src="eardrop.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
-  <div class="overlay-image"></div>
-</div>
-
-<div class="link-container">
-  <div class="bg-rectangle">
-    <a href="https://chatgpt.com/c/cdd32418-65d1-4aef-abc7-dbb4f6987678" target="_blank" class="Search">Search</a>
+  <!-- 导航栏 -->
+  <div class="navbar">
+    <a href="https://space.bilibili.com/29053979?spm_id_from=333.1007.0.0" target="_blank" class="left">CNJ</a>
+    <a href="https://chatgpt.com/c/cdd32418-65d1-4aef-abc7-dbb4f6987678" target="_blank" class="middle">Chatgpt</a>
+    <a href="https://chatgpt.com/c/cdd32418-65d1-4aef-abc7-dbb4f6987678" target="_blank" class="middle1 moonight">Moonight</a>
+    <a href="https://translate.google.com/?hl=zh-CN&sl=auto&tl=zh-CN&op=translate" target="_blank" class="middle2">Translate</a>
+    <a href="https://chatgpt.com/c/cdd32418-65d1-4aef-abc7-dbb4f6987678" target="_blank" class="right">Animation</a>
   </div>
-</div>
 
-<div class="scroll-indicators">
-  <div class="indicator"></div>
-  <div class="indicator"></div>
-  <div class="indicator"></div>
-</div>
+  <!-- 视频容器 -->
+  <div class="video-container">
+    <!-- 占位图片，在视频加载之前显示 -->
+    <img id="placeholder-image" src="123123.jpg" alt="Loading..." style="width: 100%; height: auto;">
+    
+    <!-- 视频元素，加载完成后自动播放 -->
+    <video id="my-video" muted loop preload="auto" style="display: none; width: 100%; height: auto;">
+      <source src="eardrop.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
 
-<div class="scroll-indicators2">
-  <div class="indicator"></div>
-  <div class="indicator"></div>
-  <div class="indicator"></div>
-</div>
+    <!-- 图片覆盖层 -->
+    <div class="overlay-image"></div>
+  </div>
 
-<div class="shape"></div>
+  <!-- 链接容器 -->
+  <div class="link-container">
+    <div class="bg-rectangle">
+      <a href="https://chatgpt.com/c/cdd32418-65d1-4aef-abc7-dbb4f6987678" target="_blank" class="Search">Search</a>
+    </div>
+  </div>
 
-<!-- 添加下一页内容 -->
-<div class="image1" >
-  <!-- 这个 div 是第二页的全屏图片 -->
-</div>
+  <!-- 滚动指示器 -->
+  <div class="scroll-indicators">
+    <div class="indicator"></div>
+    <div class="indicator"></div>
+    <div class="indicator"></div>
+  </div>
 
-<div class="image2 por" img id="image2"  alt="Image 2">
-  <!-- 这个 div 是第3页的全屏图片 -->
-</div>
+  <div class="scroll-indicators2">
+    <div class="indicator"></div>
+    <div class="indicator"></div>
+    <div class="indicator"></div>
+  </div>
 
-<div class="image3">
-  <!-- 这个 div 是第4页的全屏图片 -->
-</div>
+  <!-- 形状 -->
+  <div class="shape"></div>
 
-<div class="image4 por" img id="image4"  alt="Image 4">
-  <!-- 这个 div 是第5页的全屏图片 -->
-</div>
+  <!-- 添加全屏图片页面 -->
+  <div class="image1">
+    <!-- 第二页的全屏图片 -->
+  </div>
 
-<div class="image5">
-  <!-- 这个 div 是第6页的全屏图片 -->
-</div>
+  <div class="image2 por" id="image2">
+    <!-- 第3页的全屏图片 -->
+  </div>
 
-<div class="image6 por" img id="image6"  alt="Image 6">
+  <div class="image3">
+    <!-- 第4页的全屏图片 -->
+  </div>
 
-</div>
+  <div class="image4 por" id="image4">
+    <!-- 第5页的全屏图片 -->
+  </div>
 
-<div class="image7">
+  <div class="image5">
+    <!-- 第6页的全屏图片 -->
+  </div>
 
-</div>
-<div class="image8 por" img id="image8"  alt="Image 8">
+  <div class="image6 por" id="image6">
+    <!-- 第7页的全屏图片 -->
+  </div>
 
-</div>
+  <div class="image7">
+    <!-- 第8页的全屏图片 -->
+  </div>
 
-<script>
-  document.getElementById('scrollToTopBtn').onclick = function() {
-  window.scrollTo({
-    top: 0,
-    behavior: 'smooth'
-  });
-};
-document.addEventListener('DOMContentLoaded', function() {
-  var scrollToTopButton = document.querySelector('.scroll-to-top');
-  
-  // 初始隐藏按钮
-  scrollToTopButton.classList.add('hidden');
-  
-  // 当点击按钮时，滚动到顶部
-  scrollToTopButton.addEventListener('click', function() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
+  <div class="image8 por" id="image8">
+    <!-- 第9页的全屏图片 -->
+  </div>
 
-  // 当页面滚动时，显示或隐藏按钮
-  window.addEventListener('scroll', function() {
-    if (window.scrollY > 700) { // 当滚动超过300px时显示按钮
-      scrollToTopButton.classList.remove('hidden');
-      scrollToTopButton.classList.add('visible');
-    } else {
-      scrollToTopButton.classList.remove('visible');
+  <script>
+    // 返回顶部按钮功能
+    document.getElementById('scrollToTopBtn').onclick = function() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    };
+
+    // 页面加载完成后执行
+    document.addEventListener('DOMContentLoaded', function() {
+      var scrollToTopButton = document.querySelector('.scroll-to-top');
+      
+      // 初始隐藏返回顶部按钮
       scrollToTopButton.classList.add('hidden');
+      
+      // 当点击按钮时，滚动到顶部
+      scrollToTopButton.addEventListener('click', function() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+      // 当页面滚动时，显示或隐藏按钮
+      window.addEventListener('scroll', function() {
+        if (window.scrollY > 700) {
+          scrollToTopButton.classList.remove('hidden');
+          scrollToTopButton.classList.add('visible');
+        } else {
+          scrollToTopButton.classList.remove('visible');
+          scrollToTopButton.classList.add('hidden');
+        }
+      });
+
+      // 视频加载前显示图片，加载后播放视频
+      const video = document.getElementById('my-video');
+      const placeholderImage = document.getElementById('placeholder-image');
+
+      // 监听视频的canplay事件
+      video.addEventListener('canplay', function() {
+        placeholderImage.style.display = 'none';  // 隐藏占位图片
+        video.style.display = 'block';  // 显示视频
+        video.play();  // 播放视频
+      });
+
+      // 确保视频开始加载
+      video.load();
+    });
+
+    // 图片点击事件映射
+    const imageLinks = {
+      image1: 'https://example.com/full-image1.jpg',
+      image2: 'BREATH.jpg',
+      image3: 'https://example.com/full-image1.jpg',
+      image4: 'JINGZHAO.jpg',
+      image5: 'https://example.com/full-image1.jpg',
+      image6: 'Blade Runner 2049.jpg',
+      image7: 'https://example.com/full-image1.jpg',
+      image8: 'https://example.com/full-image2.jpg'
+    };
+
+    // 遍历每个图片ID并添加点击事件
+    for (let id in imageLinks) {
+      document.getElementById(id)?.addEventListener('click', () => {
+        window.open(imageLinks[id], '_blank');
+      });
     }
-  });
-});
-
-// 创建一个映射，将图片ID与链接对应
-const imageLinks = {
-  image1: 'https://example.com/full-image1.jpg',
-  image2: 'BREATH.jpg',
-  image3: 'https://example.com/full-image1.jpg',
-  image4: 'JINGZHAO.jpg',
-  image5: 'https://example.com/full-image1.jpg',
-  image6: 'Blade Runner 2049.jpg',
-  image7: 'https://example.com/full-image1.jpg',
-  image8: 'https://example.com/full-image2.jpg'
-};
-
-// 遍历每个图片ID并添加点击事件
-for (let id in imageLinks) {
-  document.getElementById(id)?.addEventListener('click', () => {
-    window.open(imageLinks[id], '_blank');
-  });
-}
-
 
   
  
