@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Video Background with Overlay and Top Links</title>
+<style>
+   @font-face {
+    font-family: 'STHUPO','FuturaEF Regular'; /* 自定义字体名称 */
+    src: url('STHUPO.TTF') format('truetype'), url('FuturaEF Regular.ttf') format('truetype'); /* 字体文件的路径 */
+  }
+  
+  body, html {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    font-family: 'FuturaEF Regular', 'STHUPO'; /* 应用自定义字体 */
+    box-sizing: border-box;
+    overflow-y: scroll;  
+    scrollbar-width: none; 
+  }
+
+  .video-container {
+    position: relative; /* 改为相对定位 */
+    width: 100%;
+    height: 100vh; /* 设为一个视口高度 */
+    overflow: hidden;
+  }
+
+  video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+  }
+
+  .overlay-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('moonlight.png');
+    background-position: center;
+    background-size: cover;
+    opacity: 0.8;
+  }
+
+  .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.73); /* 半透明背景 */
+    color: white;
+    text-align: center;
+    height: 50px; /* 初始高度 */
+    transition: height 0.6s ease;
+    z-index: 3;
+    overflow: hidden; /* 确保内容不会超出容器 */
+    backdrop-filter: blur(8px); /* 磨砂效果 */
+    display: flex;
+    justify-content: space-between; /* 水平居中 */
+    align-items: center; /* 垂直居中 *//* 左边添加22px的距离 */
+    margin-right: 5px;
+    box-shadow: 0 2px 5px rgba(68, 68, 68, 0.02); /* 添加阴影 */
+  }
+
+
+  .navbar a {
+  color: rgb(0, 0, 0);
+  text-decoration: none;
+  line-height: 40px; /* 与导航栏初始高度相同 */
+  font-size: 14px; /* 初始字体大小 */
+  transition: line-height 0s ease, font-size 0.6s ease, color 1s ease; /* 添加行高和字体大小的过渡效果 */
+  display: inline;
+  margin: 0 10px; /* 为链接添加左右间距 */
+  position: relative; /* 设置相对定位，为了定位伪元素 */
+}
+.middle {
+  margin-left: 20px; /* 这里可以设置你需要的左边距值 */
+}
+
+  .navbar a:hover {
+    font-size: 23px; /* 悬停时字体大小增大 */
+    color: rgb(201, 15, 15);
+  }
+
+  .navbar:hover {
+    height: 245px; /* 悬停时变长到250px */
+  }
+
+  .navbar:hover a {
+    line-height: 60px; /* 悬停时文字链接的行高变为60px */
+  }
+  .right {
+  padding-right: 10px; /* 这里可以设置你需要的左边距值 */
+}
+.left {
+  padding-left: 42px; /* 这里可以设置你需要的左边距值 */
+}
+
+
+.navbar a::after {
+  content: ''; /* 伪元素内容为空 */
+  position: absolute; /* 绝对定位 */
+  bottom: 0; /* 位于文字下方 */
+  left: 50%; /* 水平居中 */
+  border-radius: 100px;
+  transform: translateX(-50%); /* 确保方块水平居中 */
+  width: 0; /* 初始宽度为0 */
+  height: 1px; /* 方块的高度 */
+  background-color: rgb(201, 15, 15); /* 方块颜色 */
+  transition: width 0.4s ease; /* 过渡效果 */
+}
+
+.navbar a:hover::after {
+  width: 135%; /* 鼠标悬停时宽度变为100% */
+}
+
+
+.link-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 135px);
+  text-align: center;
+}
+
+.link-container a {
+  color: #ffffff;
+  font-size: 22px;
+  text-decoration: none;
+  display: inline-block;
+  padding: 17px 170px;
+  position: relative;
+  z-index: 2;
+  margin-left: 8px;
+  font-family: 'FuturaEF Regular', sans-serif; /* 应用自定义字体 */
+  letter-spacing: 6px; /* 初始字间距 */
+  transition: letter-spacing 0.5s ease; /* 添加字间距的过渡效果 */
+}
+
+.link-container .bg-rectangle {
+  background-color: #000000;
+  border-radius: 100px;
+  box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.1), 0 1px 15px rgba(179, 0, 0, 0.1); /* 添加内阴影 */
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  opacity: 0.1;
+  display: inline-block;
+  transition: transform 1.1s, opacity 0.2s, border-radius 0.5s ease, background-color 0.5s ease, border 0.86s ease, box-shadow 0.5s ease; /* 添加过渡效果 */
+}
+
+.link-container a:hover {
+  letter-spacing: 20px; /* 悬停时增加字间距 */
+}
+
+.link-container .bg-rectangle:hover {
+  transform: scale(1.1);
+  background-color: #cc0404;
+  box-shadow: inset 0 0 18px rgba(22, 0, 0, 0.0), 0 1px 15px rgba(179, 0, 0, 0.4); /* 添加内阴影 */
+  border: 40px solid rgb(226, 16, 16); /* 悬停时增加阴影 */
+  opacity: 1;
+  transform: translate(0%, -41px);
+}
+
+  .por {
+    cursor: pointer; /* 显示手型光标 */
+  }
+
+  .image1 {
+    height: 95vh; /* 下一页内容的高度 */
+    background-image: url('CNJ1.png'); /* 替换为你自己的图片路径 */
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+  }
+
+  .image2 {
+    width: 15%; /* 缩小为80% */
+    height: 35vh; /* 下一页内容的高度 */
+    background-image: url('BREATH.jpg'); /* 替换为你自己的图片路径 */
+    background-position: center;
+    background-size: cover ;
+    background-repeat: no-repeat;
+    transition: transform 0.9s ease,width 0.8s ease,height 0.6s ease; 
+    box-shadow: inset 0 0 18px rgba(22, 0, 0, 0.5); 
+    margin: 0 auto; /* 居中显示 *//* 添加内阴影 */
+  }
+  .image2:hover {
+    transform: scale(1.00);
+    width: 85%; 
+    height: 70vh; /* 鼠标悬停时稍微放大 */
+  }
+
+
+
+  .image3 {
+    height: 12vh; /* 下一页内容的高度 */
+    background-image: url('BREATH1.png'); /* 替换为你自己的图片路径 */
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+
+  .image4 {
+    width: 15%;
+    height: 35vh; /* 下一页内容的高度 */
+    background-image: url('JINGZHAO.jpg'); /* 替换为你自己的图片路径 */
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    transition: transform 0.9s ease,width 0.8s ease,height 0.6s ease;
+    margin: 0 auto; 
+    box-shadow: inset 0 0 18px rgba(22, 0, 0, 0.5); /* 添加内阴影 */
+  }
+  .image4:hover {
+    transform: scale(1.00);
+    width: 85%; 
+    height: 70vh; /* 鼠标悬停时稍微放大 */
+  }
+
+
+  .image5 {
+    height: 12vh; /* 下一页内容的高度 */
+    background-image: url('jingzhao 1.png'); /* 替换为你自己的图片路径 */
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+
+  .image6 {
+    width: 15%;
+    height: 35vh; /* 下一页内容的高度 */
+    background-image: url('Blade Runner 2049.jpg'); /* 替换为你自己的图片路径 */
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    transition: transform 0.9s ease,width 0.8s ease,height 0.6s ease;
+    margin: 0 auto; 
+    box-shadow: inset 0 0 18px rgba(22, 0, 0, 0.5); /* 添加内阴影 */
+  }
+  .image6:hover {
+    transform: scale(1.00);
+    width: 85%; 
+    height: 70vh; /* 鼠标悬停时稍微放大 */
+  }
+  .image7 {
+    height: 12vh; /* 下一页内容的高度 */
+    background-image: url('Blade Runner 2049 1.png'); /* 替换为你自己的图片路径 */
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+
+  .image8 {
+    height: 120vh; /* 下一页内容的高度 */
+    background-image: url('--'); /* 替换为你自己的图片路径 */
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+
+
+
+  .image2 {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .image2 > a {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  .scroll-to-top {
+    display: flex; /* 初始状态隐藏 */
+  position: fixed;
+  opacity: 0;
+  bottom: 40px;
+  right: 40px;
+  width: 50px;
+  height: 50px;
+  background-color: #333;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.7s ease, transform 0.6s ease, opacity 0.4s ease; /* 添加透明度的过渡效果 */
+  border: none; /* 确保没有边框 */
+  outline: none; /* 去掉焦点轮廓 */
+  z-index: 33;
+}
+
+.scroll-to-top:hover {
+  background-color: #c70000;
+  transform: scale(1.3); /* 增大按钮 */
+}
+
+.scroll-to-top:active {
+  transform: scale(1.3) translateY(-30px); /* 解决冲突：保持hover的缩放，添加点击的向上移动 */
+  opacity: 0.2; /* 点击时透明度变为0 */
+  transition: transform 0.4s ease, opacity 0.7s ease; /* 确保透明度和缩放动画速度一致 */
+}
+.circle {
+  position: absolute;
+  width: 20px; /* 初始小圆的大小 */
+  height: 20px;
+  opacity: 1;
+  background-color: #fff;
+  border-radius: 50%; /* 正圆形 */
+  transition: transform 0.4s ease,opacity 0.36s ease,background-color 0.7s ease,width 0.4s ease,height 0.4s ease; /* 过渡效果 */
+  z-index: 1; /* 使小圆在箭头下方 */
+}
+
+.scroll-to-top:hover .circle {
+  width: 70px; /* 初始小圆的大小 */
+  height: 70px;
+  opacity: 0;
+  background-color: #ffffff;
+
+}
+
+.arrow-up {
+  width: 0;
+  height: 0;
+  border-left: 0px solid transparent;
+  border-right: 0px solid transparent;
+  border-bottom: 50px solid #fff;
+  transition: transform 0.3s cubic-bezier(0.42, 0, 0.58, 1), 
+              border-width 0.7s cubic-bezier(0.42, 0, 0.58, 1);
+  transform: translateY(30px); /* 初始位置 */
+  box-shadow: none; /* 确保没有额外的阴影 */
+}
+
+.scroll-to-top:hover .arrow-up {
+  transform: translateY(11px); /* 上移三角形 */
+  border-bottom: 53px solid #ffffff;
+  border-left: 60px solid transparent;
+  border-right: 60px solid transparent;
+}
+.scroll-to-top.visible {
+  opacity: 1; /* 显示按钮 */
+}
+.scroll-to-top.hidden {
+  opacity: 0; /* 隐藏按钮 */
+}
+/* 添加隐藏类 */
+.hidden {
+  opacity: 0;/* ლ(╹◡╹ლ)  ((( ✿＞◡❛) */
+  pointer-events: none; /* 禁用点击事件 */
+}
+
+
+</style>
+</head>
+<body>
+  <button id="scrollToTopBtn" class="scroll-to-top">
+    <div class="arrow-up"></div>
+    <div class="circle"></div> <!-- 新增的小圆 -->
+  </button>
+<!-- 添加导航栏 -->
+<div class="navbar">
+  <a href="https://space.bilibili.com/29053979?spm_id_from=333.1007.0.0" target="_blank" class="left">CNJ</a>
+  <a href="https://chatgpt.com/c/cdd32418-65d1-4aef-abc7-dbb4f6987678" target="_blank" class="middle">Chatgpt</a>
+  <a href="https://chatgpt.com/c/cdd32418-65d1-4aef-abc7-dbb4f6987678" target="_blank" class="middle1 moonight">Moonight</a>
+  <a href="https://translate.google.com/?hl=zh-CN&sl=auto&tl=zh-CN&op=translate" target="_blank" class="middle2">Translate</a>
+  <a href="https://chatgpt.com/c/cdd32418-65d1-4aef-abc7-dbb4f6987678" target="_blank" class="right">Animation</a>
+</div>
+
+<div class="video-container">
+  <video autoplay muted loop>
+    <source src="eardrop.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+  <div class="overlay-image"></div>
+</div>
+
+<div class="link-container">
+  <div class="bg-rectangle">
+    <a href="https://chatgpt.com/c/cdd32418-65d1-4aef-abc7-dbb4f6987678" target="_blank" class="Search">Search</a>
+  </div>
+</div>
+
+<div class="scroll-indicators">
+  <div class="indicator"></div>
+  <div class="indicator"></div>
+  <div class="indicator"></div>
+</div>
+
+<div class="scroll-indicators2">
+  <div class="indicator"></div>
+  <div class="indicator"></div>
+  <div class="indicator"></div>
+</div>
+
+<div class="shape"></div>
+
+<!-- 添加下一页内容 -->
+<div class="image1" >
+  <!-- 这个 div 是第二页的全屏图片 -->
+</div>
+
+<div class="image2 por" img id="image2"  alt="Image 2">
+  <!-- 这个 div 是第3页的全屏图片 -->
+</div>
+
+<div class="image3">
+  <!-- 这个 div 是第4页的全屏图片 -->
+</div>
+
+<div class="image4 por" img id="image4"  alt="Image 4">
+  <!-- 这个 div 是第5页的全屏图片 -->
+</div>
+
+<div class="image5">
+  <!-- 这个 div 是第6页的全屏图片 -->
+</div>
+
+<div class="image6 por" img id="image6"  alt="Image 6">
+
+</div>
+
+<div class="image7">
+
+</div>
+<div class="image8 por" img id="image8"  alt="Image 8">
+
+</div>
+
+<script>
+  document.getElementById('scrollToTopBtn').onclick = function() {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+};
+document.addEventListener('DOMContentLoaded', function() {
+  var scrollToTopButton = document.querySelector('.scroll-to-top');
+  
+  // 初始隐藏按钮
+  scrollToTopButton.classList.add('hidden');
+  
+  // 当点击按钮时，滚动到顶部
+  scrollToTopButton.addEventListener('click', function() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  // 当页面滚动时，显示或隐藏按钮
+  window.addEventListener('scroll', function() {
+    if (window.scrollY > 700) { // 当滚动超过300px时显示按钮
+      scrollToTopButton.classList.remove('hidden');
+      scrollToTopButton.classList.add('visible');
+    } else {
+      scrollToTopButton.classList.remove('visible');
+      scrollToTopButton.classList.add('hidden');
+    }
+  });
+});
+
+// 创建一个映射，将图片ID与链接对应
+const imageLinks = {
+  image1: 'https://example.com/full-image1.jpg',
+  image2: 'BREATH.jpg',
+  image3: 'https://example.com/full-image1.jpg',
+  image4: 'JINGZHAO.jpg',
+  image5: 'https://example.com/full-image1.jpg',
+  image6: 'Blade Runner 2049.jpg',
+  image7: 'https://example.com/full-image1.jpg',
+  image8: 'https://example.com/full-image2.jpg'
+};
+
+// 遍历每个图片ID并添加点击事件
+for (let id in imageLinks) {
+  document.getElementById(id)?.addEventListener('click', () => {
+    window.open(imageLinks[id], '_blank');
+  });
+}
+
+
+  
+ 
+</script>
+</body>
+</html>
