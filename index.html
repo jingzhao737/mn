@@ -14,7 +14,7 @@
     margin: 0;
     padding: 0;
     overflow-x: hidden;
-    font-family: 'FuturaEF Regular', 'STHUPO'; /* 应用自定义字体 */
+    font-family: 'FuturaEF Regular', ''; /* 应用自定义字体 */
     box-sizing: border-box;
     overflow-y: scroll;  
     scrollbar-width: none; 
@@ -98,7 +98,7 @@
 }
 
   .navbar a:hover {
-    font-size: 23px; /* 悬停时字体大小增大 */
+    font-size: 17px; /* 悬停时字体大小增大 */
     color: rgb(201, 15, 15);
   }
 
@@ -107,13 +107,13 @@
   }
 
   .navbar:hover a {
-    line-height: 60px; /* 悬停时文字链接的行高变为60px */
+    line-height: 40px; /* 悬停时文字链接的行高变为60px */
   }
   .right {
   padding-right: 10px; /* 这里可以设置你需要的左边距值 */
 }
 .left {
-  padding-left: 42px; /* 这里可以设置你需要的左边距值 */
+  padding-left: 0px; /* 这里可以设置你需要的左边距值 */
 }
 
 
@@ -133,7 +133,116 @@
 .navbar a:hover::after {
   width: 135%; /* 鼠标悬停时宽度变为100% */
 }
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url('yyl.svg');
+  width: 40px;
+  height: 40px;
+  transform:scale(0.7) translateY(2px);
+  border-radius: 0%; /* 圆形效果 */
+  margin-right: 170px;
+  margin-left: 20px;
+  z-index: 99;
+  transition: transform 0.5s ease;
+  min-width: 40px;
+}
+.logo:hover {
+  transform:  scale(0.8) translateY(-1px);
+}
 
+@media only screen and (max-width: 768px) {
+  body {
+    background-color: rgb(255, 255, 255);
+    font-size: 16px;
+  }
+
+  .navbar {
+    height: 70px; /* 导航栏变为垂直排列 */
+  }
+
+  .logo {
+    width: 40px;
+    height: 40px;
+    margin-right: 50px;
+  }
+
+  .menu-item {
+    font-size: 14px;
+  }
+}
+.footer {
+  background-color: #000000; /* 背景颜色 */
+  color: white; /* 文字颜色 */
+  padding: 30px 0; /* 内边距 */
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between; /* 各部分水平对齐 */
+  flex-wrap: wrap; /* 当屏幕宽度变窄时，元素会自动换行 */
+  max-width: 1880px;
+  margin: 0 auto;
+}
+
+.footer-section {
+  flex: 1; /* 每个部分占据相同的宽度 */
+  padding: 30px;
+  min-width: 150px;
+}
+
+.footer-section h4 {
+  margin-bottom: 15px;
+}
+
+.footer-section ul {
+  list-style: none; /* 去掉列表样式 */
+  padding: 0;
+}
+
+.footer-section ul li {
+  margin-bottom: 5px;
+}
+
+.footer-section ul li a {
+  color: white;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-section ul li a:hover {
+  color: #f0a500; /* 悬停时改变链接颜色 */
+}
+
+.footer-bottom {
+  text-align: center;
+  padding-top: 20px;
+  border-top: 1px solid #444;
+}
+
+.footer-bottom p {
+  margin: 20;
+  font-size: 14px;
+}
+
+.social-media {
+  display: center;
+}
+
+.social-media li {
+  margin-right: 0px;
+}
+@media (max-width: 768px) {
+  .footer-container {
+    flex-direction: column; /* 在小屏设备上变成垂直排列 */
+  }
+
+  .footer-section {
+    text-align: center;
+    margin-bottom: -20px;
+  }
+}
 
 .link-container {
   position: absolute;
@@ -389,7 +498,7 @@
 }
 .side-nav {
   position: fixed;
-  left: 50%; /* 调整按钮到左侧的位置 */
+  left: 50%; /* Adjust to your preference */
   top: 87.7%;
   transform: translate(-50%, -50%);
   border: 8px solid rgba(255, 255, 255, 0.6);
@@ -399,10 +508,12 @@
   flex-direction: row;
   backdrop-filter: blur(5px);
   background-color: rgba(114, 84, 84, 0.1);
-  z-index: 100; /* 确保按钮在页面最上层 */
+  z-index: 100; /* Ensure it's on top */
   box-shadow: 0 0px 15px rgba(0, 0, 0, 0.1);
-  transition: transform 0.6s ease,border 0.3s,box-shadow 1.3s,background-color 0.5s;
+  transition: top 0.9s ease, transform 0.6s ease, border 0.3s, bottom 0.3s ease, box-shadow 1.3s, background-color 0.5s;
 }
+
+
 .side-nav:hover  {
   transform: translate(-50%, -50%) scale(1.13);
   border: 1px solid rgba(255, 255, 255, 0.6);
@@ -463,6 +574,7 @@
   animation: clickAnimation 0.8s ease forwards;
 }
 
+
 /* 动画效果 */
 @keyframes clickAnimation {
   0% {
@@ -487,7 +599,10 @@
   </button>
 <!-- 添加导航栏 -->
 <div class="navbar">
-  <a href="https://space.bilibili.com/29053979?spm_id_from=333.1007.0.0" target="_blank" class="left">CNJ</a>
+  <div class="logo">
+    <span></span>
+</div>
+  <a href="https://space.bilibili.com/29053979?spm_id_from=333.1007.0.0" target="_blank" class="left">Channel</a>
   <a href="https://chatgpt.com/c/cdd32418-65d1-4aef-abc7-dbb4f6987678" target="_blank" class="middle">Chatgpt</a>
   <a href="https://chatgpt.com/c/cdd32418-65d1-4aef-abc7-dbb4f6987678" target="_blank" class="middle1 moonight">Moonight</a>
   <a href="https://translate.google.com/?hl=zh-CN&sl=auto&tl=zh-CN&op=translate" target="_blank" class="middle2">Translate</a>
@@ -566,14 +681,45 @@
   <button onclick="scrollToSection('image4')"class="btn-green"></button>
   <button onclick="scrollToSection('image6')"class="btn-blue"></button>
 </div>
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-section">
+      <h4>Contact Us .</h4>
+      <p>Telephone:18958957879</p>
+      <p>Email:2578215228@qq.com</p>
+    </div>
+    
+    <div class="footer-section">
+      <h4>Navigate the link .</h4>
+      <ul>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Help</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+      </ul>
+    </div>
+    
+    <div class="footer-section">
+      <h4>Follow us .</h4>
+      <ul class="social-media">
+        <li><a href="#">Micro-blog</a></li>
+        <li><a href="#">Wechat</a></li>
+        <li><a href="#">Twitter</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2024 Jingzhao 版权所有.</p>
+  </div>
+</footer>
 <script>
   
-document.getElementById('scrollToTopBtn').onclick = function() {
+  document.getElementById('scrollToTopBtn').onclick = function() {
   window.scrollTo({
     top: 0,
     behavior: 'smooth'
   });
 };
+
 function scrollToSection(id) {
   const element = document.getElementById(id);
   if (element) {
@@ -583,7 +729,7 @@ function scrollToSection(id) {
     const elementHeight = elementRect.height;
     const windowHeight = window.innerHeight;
 
-    const scrollToPosition = elementTop - (windowHeight / 2) + (elementHeight / 2)+ 140;
+    const scrollToPosition = elementTop - (windowHeight / 2) + (elementHeight / 2) + 140;
 
     window.scrollTo({
       top: scrollToPosition,
@@ -592,16 +738,16 @@ function scrollToSection(id) {
   }
 }
 
-    document.querySelector('video').addEventListener('loadeddata', function() {
-        document.querySelector('.image-placeholder').style.display = 'none';
-    });
+document.querySelector('video').addEventListener('loadeddata', function() {
+  document.querySelector('.image-placeholder').style.display = 'none';
+});
 
 document.addEventListener('DOMContentLoaded', function() {
   var scrollToTopButton = document.querySelector('.scroll-to-top');
-  
+
   // 初始隐藏按钮
   scrollToTopButton.classList.add('hidden');
-  
+
   // 当点击按钮时，滚动到顶部
   scrollToTopButton.addEventListener('click', function() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -617,6 +763,23 @@ document.addEventListener('DOMContentLoaded', function() {
       scrollToTopButton.classList.add('hidden');
     }
   });
+  
+  // 调整 side-nav 的位置
+  const sideNav = document.querySelector('.side-nav');
+const footer = document.querySelector('footer');
+
+window.addEventListener('scroll', function() {
+  const footerTop = footer.getBoundingClientRect().top;
+  const windowHeight = window.innerHeight;
+
+  if (footerTop <= windowHeight) {
+    sideNav.style.top = 'calc(87.7% - 617px)'; // Adjust top position when scrolled
+  } else {
+    sideNav.style.top = '87.7%'; // Reset to original top position
+  }
+});
+
+
 });
 
 // 创建一个映射，将图片ID与链接对应
@@ -636,8 +799,7 @@ for (let id in imageLinks) {
   document.getElementById(id)?.addEventListener('click', () => {
     window.open(imageLinks[id], '_blank');
   });
-}
-
+};
 
 
 
