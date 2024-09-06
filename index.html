@@ -72,7 +72,7 @@
     text-align: center;
     height: 50px; /* 初始高度 */
     transition: height 0.6s ease;
-    z-index: 99;
+    z-index: 999;
     overflow: hidden; /* 确保内容不会超出容器 */
     backdrop-filter: blur(8px); /* 磨砂效果 */
     display: flex;
@@ -110,7 +110,7 @@
     line-height: 40px; /* 悬停时文字链接的行高变为60px */
   }
   .right {
-  padding-right: 10px; /* 这里可以设置你需要的左边距值 */
+  padding-right: 30px; /* 这里可以设置你需要的左边距值 */
 }
 .left {
   padding-left: 0px; /* 这里可以设置你需要的左边距值 */
@@ -142,8 +142,8 @@
   height: 40px;
   transform:scale(0.7) translateY(2px);
   border-radius: 0%; /* 圆形效果 */
-  margin-right: 170px;
-  margin-left: 20px;
+  margin-right: 340px;
+  margin-left: 60px;
   z-index: 99;
   transition: transform 0.5s ease;
   min-width: 40px;
@@ -166,6 +166,7 @@
     width: 40px;
     height: 40px;
     margin-right: 50px;
+    margin-left: 20px;
   }
 
   .menu-item {
@@ -237,7 +238,6 @@
   .footer-container {
     flex-direction: column; /* 在小屏设备上变成垂直排列 */
   }
-
   .footer-section {
     text-align: center;
     margin-bottom: -20px;
@@ -289,7 +289,32 @@
   opacity: 1;
   transform: translate(0%, -41px);
 }
+@media (max-width: 768px) {
+  .link-container {
+    transform: translate(-50%, 90px); /* 调整整体位置 */
+  }
 
+  .link-container a {
+    font-size: 16px; /* 减小字体大小 */
+    padding: 12px 100px; /* 减小内边距 */
+    letter-spacing: 3px; /* 减少初始字间距 */
+  }
+
+  .link-container a:hover {
+    letter-spacing: 12px; /* 悬停时的字间距减少 */
+  }
+
+  .link-container .bg-rectangle {
+    border-radius: 50px; /* 减小边框半径 */
+    box-shadow: inset 0 0 8px rgba(255, 255, 255, 0.1), 0 1px 12px rgba(179, 0, 0, 0.1); /* 调整阴影 */
+  }
+
+  .link-container .bg-rectangle:hover {
+    transform: scale(1.05); /* 减小缩放效果 */
+    border: 20px solid rgb(226, 16, 16); /* 减少悬停时的边框宽度 */
+    transform: translate(0%, -30px); /* 调整悬停时的位移 */
+  }
+}
   .por {
     cursor: pointer; /* 显示手型光标 */
   }
@@ -773,7 +798,7 @@ window.addEventListener('scroll', function() {
   const windowHeight = window.innerHeight;
 
   if (footerTop <= windowHeight) {
-    sideNav.style.top = 'calc(87.7% - 617px)'; // Adjust top position when scrolled
+    sideNav.style.top = 'calc(87.7% - 65.2%)'; // Adjust top position when scrolled
   } else {
     sideNav.style.top = '87.7%'; // Reset to original top position
   }
