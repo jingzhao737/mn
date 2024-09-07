@@ -90,7 +90,7 @@
   text-decoration: none;
   line-height: 40px; /* 与导航栏初始高度相同 */
   font-size: 14px; /* 初始字体大小 */
-  transition: line-height 0s ease, font-size 0.6s ease, color 0.1s ease; /* 添加行高和字体大小的过渡效果 */
+  transition: line-height 0s ease, font-size 0.5s ease, color 0.1s ease; /* 添加行高和字体大小的过渡效果 */
   display: inline;
   margin: 0 10px; /* 为链接添加左右间距 */
   position: relative;
@@ -101,12 +101,12 @@
 }
 
   .navbar a:hover {
-    font-size: 16px; /* 悬停时字体大小增大 */
+    font-size: 15.5px; /* 悬停时字体大小增大 */
     color: rgb(255, 255, 255);
   }
 
   .navbar:hover {
-    height: 110px; /* 悬停时变长到250px */
+    height: 80px; /* 悬停时变长到250px */
   }
 
   .navbar:hover a {
@@ -124,8 +124,8 @@
   content: ''; /* 伪元素内容为空 */
   position: absolute; /* 绝对定位 */
   top: 0; /* 覆盖整个文字 */
-  left: -5px;
-  right: -5px;
+  left: -1px;
+  right: -1px;
   bottom: 0;
   opacity: 0%;
   backdrop-filter: blur(8px);
@@ -133,7 +133,8 @@
   transform: scaleY(1.2); /* 初始时缩放效果 */
   background-color: rgb(0, 0, 0); /* 方块颜色 */
   z-index: -1; /* 让伪元素位于文字下方 */
-  transition: transform 0.3s ease,left 0.7s ease,right 0.7s ease,opacity 0.1s ease,border-radius 0.9s ease; /* 过渡效果 */
+  box-shadow: 0 0 11px rgba(65, 65, 65, 0.5); /* 添加白色内发光效果 */
+  transition: transform 0.3s ease, left 0.6s ease, right 0.6s ease, opacity 0.16s ease, border-radius 0.9s ease; /* 过渡效果 */
 }
 
 .navbar a:hover::after {
@@ -156,11 +157,11 @@
   margin-right: 340px;
   margin-left: 0px;
   z-index: 99;
-  transition: transform 1.25s ease;
+  transition: transform 1.9s ease;
   min-width: 40px;
 }
 .logo:hover {
-  transform:  scale(1.4) translateY(-1px);
+  transform:  scale(1.2) translateY(-1px);
 }
 
 @media only screen and (max-width: 768px) {
@@ -174,7 +175,7 @@
    /* 设置相对定位，为了定位伪元素 */
 }
   .navbar {
-    height: 70px; /* 导航栏变为垂直排列 */
+    height: 80px; /* 导航栏变为垂直排列 */
   }
   .right {
   padding-right: 0px; /* 这里可以设置你需要的左边距值 */
