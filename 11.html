@@ -22,7 +22,7 @@
             position: fixed;
             bottom: 0;
             width: 80vw;
-            height: 40vh;
+            height: 50vh;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -34,7 +34,7 @@
             height: 60%;
             position: absolute;
             border-radius: 20px;
-            animation: wave 3.8s infinite ease-in-out;
+            animation: wave 2.9s infinite ease-in-out;
         }
 
         .layer1 {
@@ -78,6 +78,20 @@
             transform: translateX(-50%);
             width: 100px;
             animation: floatAndScale 5s infinite ease-in-out;
+            cursor: pointer; 
+        }
+
+        .light {
+            position: absolute;
+            width:140px;
+            height: 140px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            pointer-events: none;
+            box-shadow: 0 0 140px rgba(255, 255, 255, 0.9); /* 发光效果 */
+            transition: transform 0.3s ease-out; /* 光效位置的平滑过渡 */
+            mix-blend-mode: screen; /* 使光效与背景更好地融合 */
+            filter: blur(10px); 
         }
 
         @keyframes wave {
@@ -130,63 +144,88 @@
         <div class="box layer4"></div>
         <div class="box layer5"></div>
     </div>
-    <img class="star" src="star1.svg" alt="Star"/>
+    <img class="star" src="star1.svg" alt="Star" onclick="window.location.href='index.html';"/>
+    <div class="light" id="light"></div>
 
     <!-- 前景雨滴容器 -->
     <div class="rain" id="rain"></div>
-
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const rainContainer = document.getElementById('rain');
-            const minRaindrops = 10;
-            const maxRaindrops = 450;
-            const updateInterval = 1000; // 更新频率，单位毫秒
+       document.addEventListener('DOMContentLoaded', () => {
+        const rainContainer = document.getElementById('rain');
+        const minRaindrops = 10;
+        const maxRaindrops = 450;
+        const updateInterval = 1000; // 更新频率，单位毫秒
 
-            function createRaindrop() {
-                const raindrop = document.createElement('div');
-                raindrop.className = 'raindrop';
+        function createRaindrop() {
+            const raindrop = document.createElement('div');
+            raindrop.className = 'raindrop';
 
-                const leftPosition = Math.random() * 100;
-                const animationDuration = Math.random() * 0.9 + 0.2;
-                const animationDelay = Math.random() * 2;
-                const height = Math.random() * 70 + 20;
+            const leftPosition = Math.random() * 100;
+            const animationDuration = Math.random() * 0.9 + 0.2;
+            const animationDelay = Math.random() * 2;
+            const height = Math.random() * 70 + 20;
 
-                raindrop.style.left = `${leftPosition}%`;
-                raindrop.style.height = `${height}px`;
-                raindrop.style.animationDuration = `${animationDuration}s`;
-                raindrop.style.animationDelay = `${animationDelay}s`;
+            raindrop.style.left = `${leftPosition}%`;
+            raindrop.style.height = `${height}px`;
+            raindrop.style.animationDuration = `${animationDuration}s`;
+            raindrop.style.animationDelay = `${animationDelay}s`;
 
-                return raindrop;
+            return raindrop;
+        }
+
+        function addRaindrops(num) {
+            for (let i = 0; i < num; i++) {
+                rainContainer.appendChild(createRaindrop());
             }
+        }
 
-            function addRaindrops(num) {
-                for (let i = 0; i < num; i++) {
-                    rainContainer.appendChild(createRaindrop());
+        function removeRaindrops(num) {
+            const children = Array.from(rainContainer.children);
+            for (let i = 0; i < num; i++) {
+                if (children.length > 0) {
+                    const raindrop = children[i];
+                    raindrop.style.opacity = '0'; // 设置雨滴渐隐
+                    setTimeout(() => rainContainer.removeChild(raindrop), 500); // 在渐隐效果后移除
                 }
             }
+        }
 
-            function removeRaindrops(num) {
-                const children = Array.from(rainContainer.children);
-                for (let i = 0; i < num; i++) {
-                    if (children.length > 0) {
-                        const raindrop = children[i];
-                        raindrop.style.opacity = '0'; // 设置雨滴渐隐
-                        setTimeout(() => rainContainer.removeChild(raindrop), 500); // 在渐隐效果后移除
-                    }
-                }
+        setInterval(() => {
+            const currentRaindrops = rainContainer.childElementCount;
+            const targetRaindrops = Math.floor(Math.random() * (maxRaindrops - minRaindrops + 1)) + minRaindrops;
+
+            if (currentRaindrops < targetRaindrops) {
+                addRaindrops(targetRaindrops - currentRaindrops);
+            } else if (currentRaindrops > targetRaindrops) {
+                removeRaindrops(currentRaindrops - targetRaindrops);
             }
+        }, updateInterval);
 
-            setInterval(() => {
-                const currentRaindrops = rainContainer.childElementCount;
-                const targetRaindrops = Math.floor(Math.random() * (maxRaindrops - minRaindrops + 1)) + minRaindrops;
+        // 光效跟随鼠标，带有延迟效果
+        const light = document.getElementById('light');
+        let mouseX = 0, mouseY = 0;
+        let lightX = 0, lightY = 0;
+        const speed = 0.09; // 光效跟随速度，值越小延迟越大
 
-                if (currentRaindrops < targetRaindrops) {
-                    addRaindrops(targetRaindrops - currentRaindrops);
-                } else if (currentRaindrops > targetRaindrops) {
-                    removeRaindrops(currentRaindrops - targetRaindrops);
-                }
-            }, updateInterval);
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
         });
+
+        function updateLightPosition() {
+            // 使用缓动公式来更新光效位置
+            lightX += (mouseX - lightX) * speed;
+            lightY += (mouseY - lightY) * speed;
+
+            // 计算光效位置，使其中心与鼠标对齐
+            light.style.left = `${lightX - light.offsetWidth / 2}px`;
+            light.style.top = `${lightY - light.offsetHeight / 2}px`;
+            requestAnimationFrame(updateLightPosition);
+        }
+
+        updateLightPosition(); // 初始调用
+    });
+        
     </script>
 </body>
 </html>
