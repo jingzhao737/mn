@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>垂直卡片动画</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: url('bj3.jpg') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .container {
+            position: fixed;
+            bottom: 0;
+            width: 80vw;
+            height: 40vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 0;
+        }
+
+        .box {
+            width: 100%;
+            height: 60%;
+            position: absolute;
+            border-radius: 20px;
+            animation: wave 3.8s infinite ease-in-out;
+        }
+
+        .layer1 {
+            background: linear-gradient(to bottom, #f9fdff, #56db9d, #02d65a);
+            top: 20%;
+            width: 100%;
+            animation-delay: 0s;
+        }
+
+        .layer2 {
+            background: linear-gradient(to bottom, #66b198, #eeff00);
+            top: 30%;
+            width: 104%;
+            animation-delay: 0.5s;
+        }
+
+        .layer3 {
+            background: linear-gradient(to bottom, #fff0ee, #ffffff);
+            top: 40%;
+            width: 108%;
+            animation-delay: 1s;
+        }
+
+        .layer4 {
+            background: linear-gradient(to bottom, #f0e4d3, #1c8160);
+            top: 50%;
+            width: 114%;
+            animation-delay: 1.5s;
+        }
+
+        .layer5 {
+            background: linear-gradient(to bottom, #008d63, #47314e);
+            top: 60%;
+            width: 119%;
+            animation-delay: 2s;
+        }
+
+        .star {
+            position: fixed;
+            top: 32%;
+            transform: translateX(-50%);
+            width: 100px;
+            animation: floatAndScale 5s infinite ease-in-out;
+        }
+
+        @keyframes wave {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-40px); }
+            100% { transform: translateY(0); }
+        }
+
+        @keyframes floatAndScale {
+            0%, 100% { transform: translateY(0) scale(0.8); }
+            50% { transform: translateY(-50px) scale(1.4); }
+        }
+
+        .rain {
+            position: absolute;
+            top: -88px;
+            left: 0;
+            width: 130%;
+            height: 100%;
+            pointer-events: none;
+            overflow: visible;
+            z-index: 0;
+        }
+
+        .raindrop {
+            position: absolute;
+            width: 2px;
+            height: 200px;
+            background: rgba(223, 223, 223, 0.5);
+            opacity: 1;
+            animation: fall linear infinite;
+            transition: opacity 0.5s ease; /* 添加平滑的过渡效果 */
+        }
+
+        @keyframes fall {
+            from {
+                transform: translateX(0) translateY(-100px) rotate(5deg);
+            }
+            to {
+                transform: translateX(-100px) translateY(100vh) rotate(5deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="box layer1"></div>
+        <div class="box layer2"></div>
+        <div class="box layer3"></div>
+        <div class="box layer4"></div>
+        <div class="box layer5"></div>
+    </div>
+    <img class="star" src="star1.svg" alt="Star"/>
+
+    <!-- 前景雨滴容器 -->
+    <div class="rain" id="rain"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const rainContainer = document.getElementById('rain');
+            const minRaindrops = 10;
+            const maxRaindrops = 450;
+            const updateInterval = 1000; // 更新频率，单位毫秒
+
+            function createRaindrop() {
+                const raindrop = document.createElement('div');
+                raindrop.className = 'raindrop';
+
+                const leftPosition = Math.random() * 100;
+                const animationDuration = Math.random() * 0.9 + 0.2;
+                const animationDelay = Math.random() * 2;
+                const height = Math.random() * 70 + 20;
+
+                raindrop.style.left = `${leftPosition}%`;
+                raindrop.style.height = `${height}px`;
+                raindrop.style.animationDuration = `${animationDuration}s`;
+                raindrop.style.animationDelay = `${animationDelay}s`;
+
+                return raindrop;
+            }
+
+            function addRaindrops(num) {
+                for (let i = 0; i < num; i++) {
+                    rainContainer.appendChild(createRaindrop());
+                }
+            }
+
+            function removeRaindrops(num) {
+                const children = Array.from(rainContainer.children);
+                for (let i = 0; i < num; i++) {
+                    if (children.length > 0) {
+                        const raindrop = children[i];
+                        raindrop.style.opacity = '0'; // 设置雨滴渐隐
+                        setTimeout(() => rainContainer.removeChild(raindrop), 500); // 在渐隐效果后移除
+                    }
+                }
+            }
+
+            setInterval(() => {
+                const currentRaindrops = rainContainer.childElementCount;
+                const targetRaindrops = Math.floor(Math.random() * (maxRaindrops - minRaindrops + 1)) + minRaindrops;
+
+                if (currentRaindrops < targetRaindrops) {
+                    addRaindrops(targetRaindrops - currentRaindrops);
+                } else if (currentRaindrops > targetRaindrops) {
+                    removeRaindrops(currentRaindrops - targetRaindrops);
+                }
+            }, updateInterval);
+        });
+    </script>
+</body>
+</html>
